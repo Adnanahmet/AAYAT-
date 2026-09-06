@@ -1,0 +1,19 @@
+const menuButton = document.querySelector('.menu-toggle');
+const navigation = document.querySelector('.main-nav');
+
+menuButton?.addEventListener('click', () => {
+    navigation.classList.toggle('is-open');
+});
+
+navigation?.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => navigation.classList.remove('is-open')));
+
+const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            revealObserver.unobserve(entry.target);
+        }
+    });
+}, { threshold: 0.12 });
+
+document.querySelectorAll('.reveal').forEach((element) => revealObserver.observe(element));
